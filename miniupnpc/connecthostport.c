@@ -208,7 +208,7 @@ SOCKET connecthostport(const char * host, unsigned short port,
 			PRINT_SOCKET_ERROR("setsockopt");
 		}
 #endif /* #ifdef MINIUPNPC_SET_SOCKET_TIMEOUT */
-		n = connect(s, p->ai_addr, p->ai_addrlen);
+		n = connect(s, p->ai_addr, (socklen_t)p->ai_addrlen);
 #ifdef MINIUPNPC_IGNORE_EINTR
 		/* EINTR The system call was interrupted by a signal that was caught
 		 * EINPROGRESS The socket is nonblocking and the connection cannot

@@ -547,7 +547,7 @@ parseURL(const char * url,
 			/* "%25" is just '%' in URL encoding */
 			if(scope[0] == '2' && scope[1] == '5')
 				scope += 2;	/* skip "25" */
-			l = p2 - scope;
+			l = (int)(p2 - scope);
 			if(l >= IF_NAMESIZE)
 				l = IF_NAMESIZE - 1;
 			memcpy(tmp, scope, l);
@@ -564,7 +564,7 @@ parseURL(const char * url,
 			/* "%25" is just '%' in URL encoding */
 			if(scope[0] == '2' && scope[1] == '5')
 				scope += 2;	/* skip "25" */
-			l = p2 - scope;
+			l = (int)(p2 - scope);
 			if(l >= sizeof(tmp))
 				l = sizeof(tmp) - 1;
 			memcpy(tmp, scope, l);

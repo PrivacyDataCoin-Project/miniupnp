@@ -435,19 +435,19 @@ build_absolute_url(const char * baseurl, const char * descURL,
 	   &&(url[6] == '/'))
 		return strdup(url);
 	base = (baseurl[0] == '\0') ? descURL : baseurl;
-	n = strlen(base);
+	n = (int)strlen(base);
 	if(n > 7) {
 		p = strchr(base + 7, '/');
 		if(p)
-			n = p - base;
+			n = (int)(p - base);
 	}
-	l = n + strlen(url) + 1;
+	l = n + (int)strlen(url) + 1;
 	if(url[0] != '/')
 		l++;
 	if(scope_id != 0) {
 #if defined(IF_NAMESIZE) && !defined(_WIN32)
 		if(if_indextoname(scope_id, ifname)) {
-			l += 3 + strlen(ifname);	/* 3 == strlen(%25) */
+			l += 3 + (int)strlen(ifname);	/* 3 == strlen(%25) */
 		}
 #else /* defined(IF_NAMESIZE) && !defined(_WIN32) */
 		/* under windows, scope is numerical */
@@ -468,12 +468,12 @@ build_absolute_url(const char * baseurl, const char * descURL,
 				memmove(p + 3 + strlen(ifname), p, strlen(p) + 1);
 				memcpy(p, "%25", 3);
 				memcpy(p + 3, ifname, strlen(ifname));
-				n += 3 + strlen(ifname);
+				n += 3 + (int)strlen(ifname);
 #else /* defined(IF_NAMESIZE) && !defined(_WIN32) */
 				memmove(p + 3 + strlen(scope_str), p, strlen(p) + 1);
 				memcpy(p, "%25", 3);
 				memcpy(p + 3, scope_str, strlen(scope_str));
-				n += 3 + strlen(scope_str);
+				n += 3 + (int)strlen(scope_str);
 #endif /* defined(IF_NAMESIZE) && !defined(_WIN32) */
 			}
 		}
@@ -573,7 +573,6 @@ UPNP_GetValidIGD(struct UPNPDev * devlist,
 	int ndev = 0;
 	int i;
 	int state = -1; /* state 1 : IGD connected. State 2 : IGD. State 3 : anything */
-	int n_igd = 0;
 	char extIpAddr[16];
 	char myLanAddr[40];
 	int status_code = -1;
@@ -617,7 +616,6 @@ UPNP_GetValidIGD(struct UPNPDev * devlist,
 			           "urn:schemas-upnp-org:service:WANCommonInterfaceConfig:"))
 			{
 				desc[i].is_igd = 1;
-				n_igd++;
 				if(lanaddr)
 					strncpy(lanaddr, myLanAddr, lanaddrlen);
 			}

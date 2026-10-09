@@ -780,7 +780,7 @@ ssdpDiscoverDevices(const char * const deviceTypes[],
 			break;
 		}
 		for(p = servinfo; p; p = p->ai_next) {
-			n = sendto(sudp, bufr, n, 0, p->ai_addr, p->ai_addrlen);
+			n = sendto(sudp, bufr, n, 0, p->ai_addr, (socklen_t)p->ai_addrlen);
 			if (n < 0) {
 #ifdef DEBUG
 				char hbuf[NI_MAXHOST], sbuf[NI_MAXSERV];
